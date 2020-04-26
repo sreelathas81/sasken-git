@@ -1,0 +1,7 @@
+<h3>Employee Names</h3><br><br><br>
+<ul>
+    <li *ngFor="let d of info" (click)="showData(d.id,true)">{{d.name}}&nbsp;
+      <!--  <button class="btn btn-primary" (click)="dele(d.id)">Delete</button>-->
+
+    </li>
+</ul>

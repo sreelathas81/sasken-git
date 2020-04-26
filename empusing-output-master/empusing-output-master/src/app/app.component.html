@@ -1,0 +1,97 @@
+
+<h2 class="head">Employee Management System</h2><br><br>
+<div class="row justify-content-between">
+<div class=col-2>
+    <app-child (data)="save($event,$event)"></app-child>
+</div>
+<div class=col-8  id="contentToConvert">
+    <kendo-pdf-export #pdf paperSize="A4">
+        <h3 class="h3center">Employee Details</h3>  <br><br>
+            <div *ngFor="let i of data1" id="details">
+                <div *ngIf="i.id===id" [hidden]="!hide">
+                    <mat-spinner *ngIf="showSpinner"></mat-spinner>
+                        <div class="row  bg">
+                             <div class="col-8" >
+                                 <h4>Employee Name:{{i.name }}</h4>
+                                 <h5>Employee Id:{{id}}</h5>
+                                 <h5>Designation:{{i.Position}}</h5>
+                                 <h5>Date of Birth:{{i.DOB}}</h5>
+                                 <h5>Gender:{{i.gender}}</h5>
+                                 <h5>Date of joining:{{i.joiningDate}}</h5>
+                                 <h5>Location:{{i.location}}</h5>
+                                </div>
+                                 <div class="col-4">    
+                                        <img  src={{i.imageURL}}>
+                                     </div>
+                                 </div><br>
+                            </div>
+                         </div>
+                     </kendo-pdf-export>
+                     <div [hidden]="hide">
+                      <form #newemp="ngForm"(ngSubmit)="onSubmit(newemp.value)">
+                        <div class="form-group">
+                          <label>ID:</label>
+                          <input type="text" class="form-control" name="id" id="id" ngModel>
+                        </div>
+                        <div class="form-group">
+                          <label>Name:</label>
+                          <input type="text" class="form-control" name="name" id="name" ngModel>
+                        </div>
+                        <div class="form-group">
+                          <label>Position:</label>
+                          <input type="text" class="form-control" name="Position" id="Position" ngModel>
+                        </div>
+                        <div class="form-group">
+                          <label>ImageUrl:</label>
+                          <input type="url" class="form-control" name="imageURL" id="imageURL " ngModel>
+                        </div>
+                        <div class="form-group">
+                          <label >Gender:</label><br> 
+                          <div>
+                            <input id="male" type="radio" class="custom-control-input" value="male" name="gender" ngModel >
+                            <label class="custom-control-label" for="male">Male</label>
+                         </div>
+                      
+                         <div>
+                            <input id="female" type="radio" class="custom-control-input" value="female" name="gender" ngModel >
+                            <label class="custom-control-label" for="female">Female</label>
+                         </div>
+                        </div>
+                        <div class="form-group">
+                          <label>Date of Birth:</label>
+                          <input type="date" class="form-control" name="DOB" id="DOB" ngModel>
+                        </div>
+                        <div class="form-group">
+                          <label>joiningDate:</label>
+                          <input type="date" class="form-control" name="joiningDate" id="joiningDate" ngModel>
+                        </div>
+                        <div class="form-group">
+                          <label>Location:</label>
+                          <input type="text" class="form-control" name="location" id="location" ngModel>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button><br><br>
+                      </form>
+                    </div>
+                    <p [hidden]="hide">OR Upload a file</p>
+                    <div>
+                     <button class="btn btn-primary" [hidden]="hide"  (click)="importfile()">Import File</button>
+                    </div>
+                      <div class="form-group  ">
+                       <input type="file" [hidden]="hhide"  (change)="getFiles($event)" ngModel>
+                       <button  [hidden]="hhide" type="submit" (click)="send()" class="btn btn-primary form-control" accept=".csv, .xsl">Send file</button>
+                       </div>
+                    
+                     
+
+          
+    
+
+</div>
+</div>
+
+&nbsp;<button class="btn btn-primary"(click)="newEmployee()">Add New Employee</button>&nbsp;&nbsp;
+
+<button class="btn btn-primary"(click)="prev()" [disabled]=pStatus>Previous</button>&nbsp;&nbsp;
+<button class="btn btn-primary" (click)="next()" [disabled]=nstatus>Next</button>&nbsp;&nbsp;
+<button  kendo-button class="btn btn-primary"(click)="pdf.saveAs('EmployeeDetails.pdf')">Download</button>
+
